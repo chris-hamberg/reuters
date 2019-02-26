@@ -6,7 +6,6 @@ class App:
 	def __init__(self):
 		self.url = 'http://feeds.reuters.com/Reuters/worldNews' 
 		self.update_feed()
-		self.display()
 
 	def update_feed(self):
 		response = request(self.url)
@@ -172,5 +171,9 @@ def clear():
 	else:
 		os.system('clear')
 
+def main():
+    app = App()
+    app.display()
+
 if __name__ == '__main__':
-	App()
+	main()
