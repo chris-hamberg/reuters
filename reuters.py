@@ -99,8 +99,16 @@ class DataObject:
 		self.process_date()
 
 	def process_desc(self):
-		desc = self.desc.split('.')[0]+'.'
-		desc = desc.split()
+        # NOTE slated for deprecation
+        ###### desc = self.desc.split('.')[0]+'.'
+        ###### desc = desc.split()
+        index = 100
+        try:
+            index = self.desc.index('<')
+        except IndexError as wtf:
+            pass
+        finally:
+            desc = self.desc[:index]
 		count, temp = 0, ''
 		for word in desc:
 			count += len(word)+1
