@@ -1,1 +1,1 @@
-from reuters.reuters import App as Reuters
+from reuters import App as Reuters
