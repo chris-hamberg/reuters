@@ -83,53 +83,54 @@ class App:
 
 class DataObject:
 
-	def __init__(self, data):
-		self.data  = data
-		self.title = data.title.text.title()
-		self.desc  = data.description.text
-		self.link  = data.guid.text.split('?')[0]
-		self.date  = data.pubdate.text
-		self.dict  = dict()
-		self.dict['border'] = '='*80
-		self.dict['title']  = self.title
-		self.process_data()
+    def __init__(self, data):
+        self.data  = data
+        self.title = data.title.text.title()
+        self.desc  = data.description.text
+        self.link  = data.guid.text.split('?')[0]
+        self.date  = data.pubdate.text
+        self.dict  = dict()
+        self.dict['border'] = '='*80
+        self.dict['title']  = self.title
+        self.process_data()
 
-	def process_data(self):
-		self.process_desc()
-		self.process_date()
+    def process_data(self):
+        self.process_desc()
+        self.process_date()
 
-	def process_desc(self):
+    def process_desc(self):
+        index = 100
         # NOTE slated for deprecation
         ###### desc = self.desc.split('.')[0]+'.'
         ###### desc = desc.split()
-        index = 100
         try:
             index = self.desc.index('<')
         except IndexError as wtf:
             pass
         finally:
             desc = self.desc[:index]
-		count, temp = 0, ''
-		for word in desc:
-			count += len(word)+1
-			if count < 76:
-				temp += word+' '
-			else:
-				temp += '\n\t'+word+' '
-				count = len(word)+1
-		self.dict['desc'] = temp+'\n'
-	
-	def process_date(self):
-		date = ' '.join(self.date.split()[:4])
-		self.dict['date'] = date
+            desc = desc.split()
+        count, temp = 0, ''
+        for word in desc:
+            count += len(word)+1
+            if count < 76:
+                temp += word+' '
+            else:
+                temp += '\n\t'+word+' '
+                count = len(word)+1
+        self.dict['desc'] = temp+'\n'
 
-	def __repr__(self):
-		template = '{border}\n{date}\n{title}\n{border}\n\n\t{desc}\n{border}\n'
-		return template.format(**self.dict)
+    def process_date(self):
+        date = ' '.join(self.date.split()[:4])
+        self.dict['date'] = date
 
-	def __str__(self):
-		return self.title
-	
+    def __repr__(self):
+        template = '{border}\n{date}\n{title}\n{border}\n\n\t{desc}\n{border}\n'
+        return template.format(**self.dict)
+
+    def __str__(self):
+        return self.title
+
 def request(url):
 	headers = {'user-agent': 'Firefox'}
 	req = urllib.request.Request(url, headers=headers)
