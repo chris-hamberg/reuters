@@ -85,7 +85,7 @@ class DataObject:
 
     def __init__(self, data):
         self.data  = data
-        self.title = data.title.text.title().replace("\'S", "\'s")
+        self.title = data.title.text
         self.desc  = data.description.text
         self.link  = data.guid.text.split('?')[0]
         self.date  = data.pubdate.text
